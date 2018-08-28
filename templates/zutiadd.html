@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+     <script src="../static/js/jQuery.js"></script>
+     <script src="../static/js/vue.js"></script>
+     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<style>
+    .tishe{
+        width: 500px;
+        height: 300px;
+        border: 1px solid #000000;
+    }
+</style>
+<body>
+
+      <div class="nav" style="margin: 20px">
+          查询：<input type="text" class="searchmolu">
+                <button type="button" class="btn">搜索一下</button>
+          <br>
+          班级：<div class="nianji">
+                {% for item in result %}
+                    {% if cnum == item.cnum %}
+                    <button value="{{ item.cnum }}" class="searchgid" style="color: red">{{ item.cname }}</button>
+                    {% else %}
+                    <button value="{{ item.cnum }}" class="searchgid" >{{ item.cname }}</button>
+                    {% endif %}
+                {% endfor %}
+                </div>
+          学科：<div class="seachxueke">
+                {% for item in xueke %}
+                    {% if staid == item.staid %}
+                    <button value='{{ item.staid }}' class="xueke" style="color: red">{{ item.staname }}</button>
+                    {% else %}
+                    <button value='{{ item.staid }}' class="xueke">{{ item.staname }}</button>
+                    {% endif %}
+                {% endfor %}
+                </div>
+          题型：<div class="tiixng">
+                {% for item in tixingres %}
+                    {% if tyid == item.tyid %}
+                    <button value="{{ item.tyid }}" class="searchtix" style="color: red">{{ item.tyname }}</button>
+                    {% else %}
+                    <button value="{{ item.tyid }}" class="searchtix">{{ item.tyname }}</button>
+                    {% endif %}
+                {% endfor %}
+         <br> 提交：<button type="button" value="提交" class="searchsub">提交</button>
+                </div>
+      </div>
+      {% load demo %}
+      <form action="">
+        <ul>
+            {% for item in date %}
+            <li>
+                <h3><input type="checkbox" class="changonly" value="{{ item.id }}">{{ item.tigan }}</h3>
+                <ul>
+                    {% for item1 in item.opt|abc %}
+                        <li>{{ item1 }}</li>
+                    {% endfor %}
+                </ul>
+                <span>分值</span>
+                {% if item.score %}
+                    {% if item.score == '1' %}
+                1<input type="radio" name="fenzhi{{ forloop.counter }}" value=1 checked>
+                2<input type="radio" name="fenzhi{{ forloop.counter }}" value=2>
+                3<input type="radio" name="fenzhi{{ forloop.counter }}" value=3>
+                4<input type="radio" name="fenzhi{{ forloop.counter }}" value=4>
+                5<input type="radio" name="fenzhi{{ forloop.counter }}" value=5>
+                 <input type="text" name="fenzhi{{ forloop.counter }}" >
+                     {% elif item.score == '2' %}
+                1<input type="radio" name="fenzhi{{ forloop.counter }}" value=1>
+                2<input type="radio" name="fenzhi{{ forloop.counter }}" value=2 checked>
+                3<input type="radio" name="fenzhi{{ forloop.counter }}" value=3>
+                4<input type="radio" name="fenzhi{{ forloop.counter }}" value=4>
+                5<input type="radio" name="fenzhi{{ forloop.counter }}" value=5>
+                <input type="text" name="fenzhi{{ forloop.counter }}" >
+                     {% elif item.score == '3' %}
+                1<input type="radio" name="fenzhi{{ forloop.counter }}" value=1>
+                2<input type="radio" name="fenzhi{{ forloop.counter }}" value=2>
+                3<input type="radio" name="fenzhi{{ forloop.counter }}" value=3 checked>
+                4<input type="radio" name="fenzhi{{ forloop.counter }}" value=4>
+                5<input type="radio" name="fenzhi{{ forloop.counter }}" value=5>
+                <input type="text" name="fenzhi{{ forloop.counter }}">
+                      {% elif item.score == '4' %}
+                1<input type="radio" name="fenzhi{{ forloop.counter }}" value=1>
+                2<input type="radio" name="fenzhi{{ forloop.counter }}" value=2>
+                3<input type="radio" name="fenzhi{{ forloop.counter }}" value=3>
+                4<input type="radio" name="fenzhi{{ forloop.counter }}" value=4 checked>
+                5<input type="radio" name="fenzhi{{ forloop.counter }}" value=5>
+                <input type="text" name="fenzhi{{ forloop.counter }}">
+                      {% elif item.score == '5' %}
+                1<input type="radio" name="fenzhi{{ forloop.counter }}" value=1>
+                2<input type="radio" name="fenzhi{{ forloop.counter }}" value=2>
+                3<input type="radio" name="fenzhi{{ forloop.counter }}" value=3>
+                4<input type="radio" name="fenzhi{{ forloop.counter }}" value=4 >
+                5<input type="radio" name="fenzhi{{ forloop.counter }}" value=5 checked>
+                <input type="text" name="fenzhi{{ forloop.counter }}" >
+                       {% else  %}
+                 1<input type="radio" name="fenzhi{{ forloop.counter }}" value=1>
+                2<input type="radio" name="fenzhi{{ forloop.counter }}" value=2>
+                3<input type="radio" name="fenzhi{{ forloop.counter }}" value=3>
+                4<input type="radio" name="fenzhi{{ forloop.counter }}" value=4 >
+                5<input type="radio" name="fenzhi{{ forloop.counter }}" value=5 checked>
+                <input type="text" name="fenzhi{{ forloop.counter }}" value="{{ item.score }}">
+                        {% endif %}
+                {% else %}
+                 1<input type="radio" name="fenzhi{{ forloop.counter }}" value=1>
+                 2<input type="radio" name="fenzhi{{ forloop.counter }}" value=2>
+                 3<input type="radio" name="fenzhi{{ forloop.counter }}" value=3>
+                 4<input type="radio" name="fenzhi{{ forloop.counter }}" value=4>
+                 5<input type="radio" name="fenzhi{{ forloop.counter }}" value=5>
+                  <input type="text" name="fenzhi{{ forloop.counter }}" value="{{ item.score }}">
+                {% endif %}
+            </li>
+            {% endfor %}
+            <input type="button" class="xuantitemp" value="确认">
+        </ul>
+      </form>
+      <a class="qued" target="main">预览</a>
+      {{ str|safe }}
+      <button class="xt">完成选题</button>
+      <div class="tem" style="width: 200px;height: 200px;"></div>
+      <div class="time" style="width: 200px;height: 200px;background-color: #2b669a;display: none;position: fixed;left: 0;right: 0;margin: auto;top: 0;">
+          开始时间：<input type="datetime-local" class="timestart">
+          结束时间：<input type="datetime-local" class="timeend">
+          <button class="button">确认</button>
+      </div>
+<script>
+    {#arr=location.search.slice(1).split("&")#}
+    //["gid=grade-01", "staid=xueke-01", "tyid=tixing-01"]
+    arr=location.search.substr(1).split("&")
+    var query={}
+    for(var i=0;i<arr.length;i++){
+        arr1=arr[i].split("=")
+        query[arr1[0]]=arr1[1]
+    }
+    $(".searchgid").click(function () {
+        query["cnum"]=$(this).attr("value")
+        $(".searchgid").css({color:'black'})
+        $(this).css({color:'red'})
+    })
+    $(".searchtix").click(function () {
+        $(".searchtix").css({color:'black'})
+        $(this).css({color:'red'})
+        query["tyid"]=$(this).attr("value")
+    })
+    $(".xueke").click(function () {
+        query["staid"]=$(this).attr("value")
+        $(".xueke").css({color:'black'})
+        $(this).css({color:'red'})
+    })
+    $(".searchsub").click(function (){
+        var parmas=''
+        for(var key in query){
+            if(query[key]){
+                parmas+=`${key}=`+query[key]+"&"
+            }
+        }
+        var parmas=parmas.slice(0,-1)
+        location.href="/zutisearch/?"+parmas
+    })
+    $(".btn").click(function () {
+        var con=$(".searchmolu").val()
+        location.href="/zutisearch/?con="+con
+    })
+    var ti={}
+    var score=[]
+    $("input[type=radio]").click(function () {
+        if ($(this).attr("value")){
+            score.push($(this).parent().find(".changonly").val()+"-"+$(this).attr("value") )
+        }else {
+            score.push($(this).parent().find(".changonly").val()+"-"+ $("input[type=text]").val())
+        }
+    })
+    $(".xuantitemp").click(function () {
+        ti["info"]=score.join(",")
+        ti["cnum"]=query["cnum"]
+        ti["staid"]=query["staid"]
+        var temp="info="+score.join(",")+"&cnum="+query["cnum"]+"&staid="+query["staid"]
+        $.ajax({
+            url:"/xuantitemp/",
+            data:temp,
+            success(date){
+                alert("选题成功")
+            }
+        })
+    })
+    {#预览#}
+    $(".qued").click(function () {
+        ti["info"]=score.join(",")
+        ti["cnum"]=query["cnum"]
+        ti["staid"]=query["staid"]
+        var temp="info="+score.join(",")+"&cnum="+query["cnum"]+"&staid="+query["staid"]
+        $.ajax({
+            url:"/temp/",
+            data:temp,
+            dataType:"html",
+            success(date){
+                $(".tem").html(date)
+            }
+        })
+    })
+    {#确认选题#}
+
+    $(".xt").click(function () {
+        $(".time").css('display','block')
+    })
+    $(".button").click(function () {
+        var parmas="startime="+$(".timestart").val()+"&endtime="+$(".timeend").val()
+        $.ajax({
+            url:"/tempzuti/",
+            data:parmas,
+            success(date){
+                console.log(date);
+            }
+
+        })
+    })
+
+</script>
+</body>
+</html>

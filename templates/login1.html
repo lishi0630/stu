@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+{#    <script src="../static/js/index.js"></script>#}
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+</head>
+<style>
+    html{
+background: url("../static/img/timg.jpg");
+}
+.bigBox{
+    width: 356px;height: 407px;
+    margin: 120px auto 0;
+    border: 2px solid #3F89EC;
+    border-radius: 30px;
+    overflow: hidden;cursor: pointer;
+}
+.bigBox .top{
+    width: 356px;height:24px;
+    float: left;
+    text-align: right;line-height: 24px;
+}
+.bigBox .top span{
+    margin-right:20px;
+    color: #fff;
+}
+.bigBox .zhong{
+    width: 300px;height:283px;
+    padding-left: 28px;
+    padding-right: 28px;
+    float: left;
+}
+.bigBox .zhong .one{
+    width: 300px;height:32px;
+    margin-bottom: 39px;
+    margin-top: 1px;
+    float: left;color:white;
+    text-align: center;line-height: 32px;
+    font-size: 18px;
+}
+.bigBox .zhong .input1 {
+    display: block;
+    width: 284px;height: 20px;
+    font-size: 14px;
+    padding: 10px 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+.bigBox .zhong .input2{
+    display: block;
+    width: 284px;height: 20px;
+    font-size: 14px;
+    padding: 10px 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+.bigBox .zhong .two{
+    width:100px;height:16px;
+    padding-bottom: 1px;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+.bigBox .zhong .two input{
+    width:13px;height:13px;
+    margin-top: 3px;
+    margin-bottom: 0;
+    float: left;
+}
+.bigBox .zhong .two .zi{
+    width:80px;height:16px;
+    float: left;color: white;
+}
+.bigBox .zhong .submit{
+    width:300px;height:40px;
+    border-radius: 10px;border: 0;
+    background-color: #3F89EC;color: #FFF;
+    font-size: 16px;letter-spacing:10px;font-weight: bold;
+}
+.bigBox .zhong .three{
+    width:300px;height:30px;
+}
+.bigBox .zhong .three .a1{
+    font-size: 12px;color:white;
+    float: left;text-decoration: none;
+    margin-top: 5px;margin-left: 3px;
+}
+.bigBox .zhong .three .a2{
+    font-size: 12px;color:white;
+    float:right;text-decoration: none;
+    margin-top: 5px;margin-right: 3px;
+}
+.bigBox .xia{
+     width: 300px;height:80px;
+    padding-left: 28px;
+    padding-right: 28px;
+    float: left;margin-top:30px;
+    background-color: #3F89EC;
+    opacity: 0.8;
+}
+.bigBox .xia .a1{
+    font-size: 14px;color: #fff;
+    float:left;text-decoration: none;
+    margin-top:20px;margin-right: 3px;
+}
+.bigBox .xia .a2{
+    font-size: 14px;color: #fff;
+    float:right;text-decoration: none;
+    margin-top:20px;margin-right: 3px;
+}
+.error{
+    color: red;
+}
+.bigBox .zhong .shenfen{
+    width: 300px;height:34px;
+    {#margin-top: 1px;#}
+    {#float: left;{##}
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+</style>
+<body>
+<div class="bigBox">
+    <div class="top"><span>X</span></div>
+    <form method="post" >
+    <div class="zhong">
+        <div class="identifire one">
+            <span>身　份：</span>
+            <select>
+                <option value="学生" selected="selected">学生</option>
+                <option value="教师教辅人员">教师教辅人员</option>
+            </select>
+		</div>
+{#        <div class="one">用户名密码登陆</div>#}
+        <input type="text" class="input1" placeholder="手机/邮箱/用户名" name="user" autocomplete="off" id="user" minlength="3" required>
+        <input type="text" class="input2" placeholder="密码" name="pass" autocomplete="off" id="pass" minlength="3" required>
+        <div class="two">
+            <input type="checkbox" value="week" name="save"><div class="zi">保存一周</div>
+        </div>
+        <input id="login" type="button" value="登陆" class="submit">
+        <div class="three">
+            <a href="" class="a1">忘记密码？</a>
+            <a href="" class="a2">短信快捷登陆</a>
+        </div>
+        <div class="yanzhengma" style="width: 300px;height: 100px">
+            <span>验证码：</span>
+            <img src="/code/" alt="" style="width: 150px;height: 60px">
+            <input type="text" class="yzheng">
+        </div>
+    </div>
+    </form>
+{#    <div class="xia">#}
+{#        <a href="" class="a1" >扫码登陆</a>#}
+{#        <a href="/reg" class="a2">立即注册</a>#}
+{#    </div>#}
+</div>
+<script>
+$.validator.setDefaults({
+    submitHandler: function() {
+      return
+    }
+});
+$().ready(function() {
+    $("#commentForm").validate();
+});
+$('#login').click(function(){
+                var params=""
+                var aVal = $('.identifire select');
+                if (aVal.val() == '学生') {
+                    {#$(this).attr('href','StudentIndex.html');#}
+                    params+="sign="+1
+                } else if (aVal.val() == '教师教辅人员'){
+                    $(this).attr('href','TeacherIndex.html');
+                    params+="sign="+0
+                }
+                var yanzheng=$(".yzheng").val()
+                params+="&user="+$("#user").val()+"&pass="+$("#pass").val()+"&save="+$("#save").val()+"&code="+yanzheng.toLowerCase()
+                $.ajax({
+                    type:"post",
+                    url:"/login/",
+                    data:params,
+                    success:function (data) {
+                        if (data.length<1000){
+                            data = JSON.parse(data);
+                             if (data["status"] == 1) {
+                                $("#one").html("帐户名或密码错误")
+                             }
+                        }else {
+                            location.href="/"
+                        }
+                    }
+
+                })
+            });
+</script>
+</body>
+
+
+
+</html>
